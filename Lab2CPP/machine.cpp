@@ -18,7 +18,7 @@ struct Machine {
     Stack* stack;
     Stack* ret_stack;
     Instruction* data;
-    size_t size;
+    int size;
     int current_instruction;
     int vars[4];
 };
