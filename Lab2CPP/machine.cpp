@@ -83,7 +83,7 @@ Machine* machine_read(Machine* machine, string file) {
     input.seekg(0);
     machine->size = count;
     machine->data = new Instruction[count];
-    for (size_t i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         Instruction instruction;
         getline(input, line);
         stringstream instr(line);
