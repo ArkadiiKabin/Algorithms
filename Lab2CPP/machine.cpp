@@ -131,111 +131,61 @@ void pop(Machine* machine) {
     machine->current_instruction++;
 }
 
+int light_value(Stack* stack, string operation){
+    if (stack_empty(stack))
+        throw runtime_error(operation + ": stack is empty");
+    Data value = stack_get(stack);
+    if (value.is_return_address)
+        throw runtime_error(operation + ": return address");
+    stack_pop(stack);
+    return value.value;
+}
+
 void imul(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("imul: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("imul: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("imul: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("imul: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a1.value * a2.value));
+    int a1 = light_value(stack, "imul");
+    int a2 = light_value(stack, "imul");
+    stack_push(stack, make_value(a1 * a2));
     machine->current_instruction++;
 }
 
 void iand(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("iand: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("iand: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("iand: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("iand: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a1.value & a2.value));
+    int a1 = light_value(stack, "iand");
+    int a2 = light_value(stack, "iand");
+    stack_push(stack, make_value(a1 & a2));
     machine->current_instruction++;
 }
 
 void ior(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("ior: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("ior: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("ior: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("ior: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a1.value | a2.value));
+    int a1 = light_value(stack, "ior");
+    int a2 = light_value(stack, "ior");
+    stack_push(stack, make_value(a1 | a2));
     machine->current_instruction++;
 }
 
 void ixor(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("ixor: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("ixor: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("ixor: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("ixor: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a1.value ^ a2.value));
+    int a1 = light_value(stack, "ixor");
+    int a2 = light_value(stack, "ixor");
+    stack_push(stack, make_value(a1 ^ a2));
     machine->current_instruction++;
 }
 
 void iadd(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("iadd: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("iadd: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("iadd: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("iadd: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a1.value + a2.value));
+    int a1 = light_value(stack, "iadd");
+    int a2 = light_value(stack, "iadd");
+    stack_push(stack, make_value(a1 + a2));
     machine->current_instruction++;
 }
 
 void isub(Machine* machine) {
     Stack* stack = machine->stack;
-    if (stack_empty(stack))
-        throw runtime_error("isub: stack is empty");
-    Data a1 = stack_get(stack);
-    if (a1.is_return_address)
-        throw runtime_error("isub: return address");
-    stack_pop(stack);
-    if (stack_empty(stack))
-        throw runtime_error("isub: stack is empty");
-    Data a2 = stack_get(stack);
-    if (a2.is_return_address)
-        throw runtime_error("isub: return address");
-    stack_pop(stack);
-    stack_push(stack, make_value(a2.value - a1.value));
+    int a1 = light_value(stack, "isub");
+    int a2 = light_value(stack, "isub");
+    stack_push(stack, make_value(a2 - a1));
     machine->current_instruction++;
 }
 
